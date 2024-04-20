@@ -17,6 +17,9 @@ let webcamRunning: Ref<boolean> = ref(false);
 let canUseWebcam: Ref<boolean> = ref(false);
 let handLandmarker: HandLandmarker;
 let video: HTMLVideoElement, canvasElement: HTMLCanvasElement, canvasCtx;
+let showText: Ref<string> = ref("指さしで選択してください");
+let x8 = ref(0);
+let y8 = ref(0);
 
 const init = async () => {
   if (initialized) return;
@@ -49,7 +52,7 @@ const init = async () => {
         delegate: "GPU",
       },
       runningMode: "VIDEO",
-      numHands: 2
+      numHands: 1,
     });
 };
 
@@ -98,13 +101,36 @@ const predictWebcam = async () => {
         canvasCtx.lineWidth = 3;
         canvasCtx.stroke();
       });
-
-      landmarks.forEach((lm, i) => {
+      landmarks.forEach((lm) => {
         canvasCtx.beginPath();
         canvasCtx.arc(lm.x * canvasElement.width, lm.y * canvasElement.height, 5, 0, 2 * Math.PI);
         canvasCtx.fillStyle = "#FF0000";
         canvasCtx.fill();
       });
+      x8.value = Math.round(landmarks[8].x * canvasElement.width);
+      y8.value = Math.round(landmarks[8].y * canvasElement.height);
+      let flg = false;
+      if (x8.value <= 180) {//右
+        if (y8.value <= 80) {
+          showText.value = "右上";
+          flg = true;
+        }
+        if (y8.value >= canvasElement.height - 80) {
+          showText.value = "右下";
+          flg = true;
+        }
+      } else if (x8.value >= canvasElement.width - 180) {//左
+        if (y8.value <= 80) {
+          showText.value = "左上";
+          flg = true;
+        }
+        if (y8.value >= canvasElement.height - 80) {
+          showText.value = "左下";
+          flg = true;
+        }
+      }
+      if (!flg) showText.value = "指さしで選択してください";
+
     }
   }
   canvasCtx.restore();
@@ -122,7 +148,15 @@ const predictWebcam = async () => {
       <div style="position: relative;">
         <video id="webcam" style="position: absolute;" autoplay playsinline/>
         <canvas class="output_canvas" id="output_canvas" style="position: absolute; left: 0; top: 0;"/>
+        <div v-if="webcamRunning" style="width: 100%; max-width: 640px; height: 480px; position: relative;">
+          <button class="transparent-btn outline" style="top: 0; left: 0;" :class="{red: showText === '左上'}">左上</button>
+          <button class="transparent-btn outline" style="top: 0; right: 0;" :class="{red: showText === '右上'}">右上</button>
+          <button class="transparent-btn outline" style="bottom: 0; left: 0;" :class="{red: showText === '左下'}">左下</button>
+          <button class="transparent-btn outline" style="bottom: 0; right: 0;" :class="{red: showText === '右下'}">右下</button>
+          <div style="color: white; width: 100%; height: 100%;" class="text-center d-flex align-center justify-center">選択：{{ showText }}</div>
+        </div>
       </div>
+      <div>x:{{ x8 }} y:{{ y8 }}</div>
     </div>
   </l-page-container>
 </template>
@@ -131,11 +165,33 @@ video {
   clear: both;
   display: block;
   transform: rotateY(180deg);
+  background: #AAAAAA;
+  width: 100%;
+  max-width: 640px;
+  height: 480px;
+
 }
 
 canvas {
   clear: both;
   display: block;
   transform: rotateY(180deg);
+  width: 100%;
+  max-width: 640px;
+  height: 480px;
+}
+
+.transparent-btn {
+  background: #007f8b;
+  opacity: 0.5;
+  position: absolute;
+  width: 180px;
+  height: 80px;
+  color: white;
+  border: solid 2px black;
+}
+
+.red {
+  background: red;
 }
 </style>
