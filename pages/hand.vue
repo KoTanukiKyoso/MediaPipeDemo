@@ -12,6 +12,7 @@ definePageMeta({
 });
 
 onMounted(async () => {
+  if (first.value) return;
   await init();
 });
 

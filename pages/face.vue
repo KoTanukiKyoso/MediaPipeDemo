@@ -12,8 +12,9 @@ definePageMeta({
   layout: false,
 });
 
-onMounted(() => {
-  init();
+onMounted(async () => {
+  if (first.value) return;
+  await init();
 });
 
 
