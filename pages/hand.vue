@@ -1,6 +1,12 @@
 <script setup lang="ts">
 import {FilesetResolver, HandLandmarker} from "@mediapipe/tasks-vision";
 
+let {first} = useStore();
+
+if (first.value) {
+  navigateTo("/");
+}
+
 definePageMeta({
   layout: false,
 });

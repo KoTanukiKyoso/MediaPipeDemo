@@ -1,10 +1,21 @@
 // 「N-DEV」により作成されました。
 <script setup lang="ts">
+import {useStore} from "~/composables";
+
+let {first} = useStore();
 
 definePageMeta({
   layout: false,
 });
 
+onMounted(() => {
+  init();
+});
+
+const init = async () => {
+  console.log("init");
+  first.value = false;
+};
 
 </script>
 <template>

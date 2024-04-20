@@ -9,6 +9,7 @@ export const useStore = () => {
     let isSignedUp: Ref<boolean> = useState('isSignedUp', (): boolean => false);// 新規登録時にTrue
     let gotUserData: Ref<boolean> = useState('gotUserData', () => false);
     let endFirstAuth: Ref<boolean> = useState('endFirstAuth', () => false);
+    let first: Ref<boolean> = useState('first', () => true);
     const resetAuth = () => {
         console.log("resetAuth");
         firebaseUserData.value = null;
@@ -45,6 +46,7 @@ export const useStore = () => {
         isSignedUp,
         gotUserData,
         endFirstAuth,
+        first,
 
         pages: [
             {

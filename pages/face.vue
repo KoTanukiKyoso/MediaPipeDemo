@@ -2,6 +2,12 @@
 <script setup lang="ts">
 import {FaceLandmarker, FilesetResolver, DrawingUtils} from "@mediapipe/tasks-vision";
 
+let {first} = useStore();
+
+if (first.value) {
+  navigateTo("/");
+}
+
 definePageMeta({
   layout: false,
 });
