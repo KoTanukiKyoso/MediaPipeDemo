@@ -1,4 +1,3 @@
-// 「N-DEV」により作成されました。
 <script setup lang="ts">
 import {FilesetResolver, HandLandmarker} from "@mediapipe/tasks-vision";
 
@@ -6,10 +5,9 @@ definePageMeta({
   layout: false,
 });
 
-onMounted(() => {
-  init();
+onMounted(async () => {
+  await init();
 });
-
 
 let lastVideoTime = -1;
 let initialized = false;
@@ -24,6 +22,7 @@ let y8 = ref(0);
 const init = async () => {
   if (initialized) return;
   initialized = true;
+  console.log("init");
 
   const hasGetUserMedia = () => !!navigator.mediaDevices?.getUserMedia;
   if (hasGetUserMedia()) {
