@@ -43,8 +43,8 @@ const init = async () => {
   console.log("videoWidth", videoWidth);
 
   const vision = await FilesetResolver.forVisionTasks(
-    "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@latest/wasm"
-    // "@mediapipe/tasks-vision/wasm/"
+    // "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@latest/wasm"
+    "wasm/"
   );
   faceLandmarker = await FaceLandmarker.createFromOptions(
     vision,
@@ -145,7 +145,7 @@ const predictWebcam = async () => {
 
 const drawBlendShapes = (el: HTMLElement, blendShapes: any[]) => {
   if (!blendShapes.length) return;
-  console.log(blendShapes[0]);
+  // console.log(blendShapes[0]);
   let htmlMaker = "";
   blendShapes[0].categories.map((shape) => {
     htmlMaker += `

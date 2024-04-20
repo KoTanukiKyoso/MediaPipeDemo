@@ -38,8 +38,8 @@ const init = async () => {
   canvasCtx = canvasElement.getContext("2d");
 
   const vision = await FilesetResolver.forVisionTasks(
-    "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@latest/wasm"
-    // "@mediapipe/tasks-vision/wasm/"
+    // "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@latest/wasm"
+    "wasm/"
   );
   handLandmarker = await HandLandmarker.createFromOptions(
     vision,
