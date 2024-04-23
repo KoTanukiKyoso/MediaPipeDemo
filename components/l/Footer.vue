@@ -7,7 +7,7 @@ export default defineComponent({
 </script>
 <script setup lang="ts"></script>
 <template>
-  <v-footer :app="true" border order="2" absolute class="py-8">
+  <v-footer app border order="2" absolute class="py-8" style="bottom: 0;">
     <div class="mx-auto d-flex" style="max-width: 1200px; width: 100%;">
       <div class="mr-8">
         <nuxt-link target="_blank" style="text-decoration: none;" href="https://top.nexsjp.com">

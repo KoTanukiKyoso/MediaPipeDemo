@@ -170,9 +170,8 @@ const drawBlendShapes = (el: HTMLElement, blendShapes: any[]) => {
 }
 
 </script>
-
 <template>
-  <l-page-container :max-width="980">
+  <l-page-container :max-width="980" style="min-height: 700px;">
     <div>
       <div v-if="canUseWebcam" class="pb-2">
         <v-btn v-if="!webcamRunning" text="Start Video" @click="startVideo"/>
